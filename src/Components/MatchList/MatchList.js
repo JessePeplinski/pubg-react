@@ -7,7 +7,7 @@ class MatchList extends React.Component {
         return (
             <div className="MatchList">
                 {this.props.matches.map(match => {
-                    return <Match key={match.id} match={match} matches={this.props.matches} />})
+                    return <Match key={match.id} match={match} matches={this.props.matches} onMatchSearch={this.props.onMatchSearch}/>})
                 }
             </div>
         );

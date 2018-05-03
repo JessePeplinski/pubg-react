@@ -8,12 +8,22 @@ const options = {
     headers: {
         'User-Agent': 'request',
         'Authorization': 'Bearer ' + apiKey,
-        'Accept': 'application/vnd.api+json'
+        'Accept': 'application/vnd.api+json',
+        'Accept-Encoding': 'gzip'
     },
 }
 
 const PUBG = {
-    getUserName(username) {
+
+    set username(username) {
+        this.username = username;
+    },
+
+    get username() {
+        return this.username;
+    },
+
+    getMatchIds(username) {
         return fetch(`https://api.playbattlegrounds.com/shards/pc-na/players?filter[playerNames]=${username}`, options)
         .then(response => {
             // console.log(response.status);
@@ -29,6 +39,9 @@ const PUBG = {
             }
         })
         .then(jsonResponse => {
+
+            console.log(jsonResponse);
+
             if (!jsonResponse.data) {
                 return [];
             }
@@ -39,10 +52,46 @@ const PUBG = {
         .catch(err => console.log('error occured: ' + err));
     },
 
-    // TODO: Finish this function, should I be mapping within these? 
-    getMatchIdStats(matchids) {
+    // TODO: Finish this function
+    getMatchIdStats(matchID, username) {
+        return fetch(`https://api.playbattlegrounds.com/shards/pc-na/matches/${matchID}`, options)
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            else {
+                console.log('error getting request');
+            }
+        })
+        .then(jsonResponse => {
+            if (!jsonResponse.data) {
+                return '';
+            }
 
-    }
+            // const username = 'shroud';
+
+            // get the json of a single match status in the included array
+            const results = jsonResponse.included.filter(match => match.type === 'participant' && match.attributes.stats.name === this.username); 
+
+            // return jsonResponse.data.included.map(match => {
+            //     name: match.attributes.stats.name
+            // })
+
+            console.log(results);
+            
+            return results[0].attributes.stats.kills;
+
+            // return results[0].map(match => ({
+            //     kills: match.attributes.stats.kills
+            // }));
+
+        })
+        .catch(err => console.log('error occured: ' + err));
+    },
+
+
+    // TODO - I don't think this is correct
+    username: ''
 };
 
 module.exports = PUBG;

@@ -11,7 +11,6 @@ class App extends React.Component {
     constructor(props) {
         super(props);
 
-        // TODO: The matchID should be an array of stuff
         this.state = {
             playerName: '',
             matchIDs: [],
@@ -21,27 +20,21 @@ class App extends React.Component {
     }
 
     search(username) {
-        PUBG.getUserName(username).then(searchResults => {
+        if(!PUBG.username) {
+            PUBG.username = username;
+        }
+        PUBG.getMatchIds(username).then(searchResults => {
             this.setState({
                 searchResults: searchResults
             })
         })
     }
 
-    // TODO: Make a function in PUBG to search by matchID, pass in an array of matchIDs to it.
-    // search(matchID) {
-    //     PUBG.getMatchIdStats(matchID).then(json => {
-
-    //     })
-    // }
-
     render() {
         return (
             <div className="App">
                 <SearchBar onSearch={this.search} />
                 <SearchResults searchResults={this.state.searchResults} />
-                <p>{this.state.playerName}</p>
-                <p>{this.state.matchIDs}</p>
             </div>
         );
     }
