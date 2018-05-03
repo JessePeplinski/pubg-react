@@ -28,8 +28,20 @@ const PUBG = {
                 console.log('error getting request');
             }
         })
-        // MAP SOME STUFF HERE
+        .then(jsonResponse => {
+            if (!jsonResponse.data) {
+                return [];
+            }
+            return jsonResponse.data[0].relationships.matches.data.map(match => ({
+                id: match.id
+            }));
+        })
         .catch(err => console.log('error occured: ' + err));
+    },
+
+    // TODO: Finish this function, should I be mapping within these? 
+    getMatchIdStats(matchids) {
+
     }
 };
 
