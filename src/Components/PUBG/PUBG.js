@@ -68,29 +68,19 @@ const PUBG = {
                 return '';
             }
 
-            // const username = 'shroud';
-
-            // get the json of a single match status in the included array
+            // get an array with json of a single match status in the included array
             const results = jsonResponse.included.filter(match => match.type === 'participant' && match.attributes.stats.name === this.username); 
-
-            // return jsonResponse.data.included.map(match => {
-            //     name: match.attributes.stats.name
-            // })
 
             console.log(results);
             
-            return results[0].attributes.stats.kills;
-
-            // return results[0].map(match => ({
-            //     kills: match.attributes.stats.kills
-            // }));
+            // TODO: Return the right thing here to spit out all the desired fields. I can also set the state?
+            return results[0];
 
         })
         .catch(err => console.log('error occured: ' + err));
     },
 
-
-    // TODO - I don't think this is correct
+    // TODO - Throwing an error for no duplicate keys
     username: ''
 };
 
