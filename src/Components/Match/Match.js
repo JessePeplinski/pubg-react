@@ -19,6 +19,7 @@ class Match extends React.Component {
     }
 
     // TODO: Pass in username here as well
+    // TODO: Make this not render twice on click
     searchMatch() {
         PUBG.getMatchIdStats(this.props.match.id).then(matchResults => {
             this.setState({

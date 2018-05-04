@@ -7,7 +7,7 @@ class SearchResults extends React.Component {
     render() {
         return (
             <div className="SearchResults">
-                <h2>Results for {PUBG.username}</h2>
+                {PUBG.username ? <h2>Results for {PUBG.username}</h2> : null}
                 <MatchList matches={this.props.searchResults} onMatchSearch={this.props.onMatchSearch}/>
             </div>
         );
