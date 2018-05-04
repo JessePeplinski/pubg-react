@@ -32,7 +32,7 @@ class SearchBar extends React.Component {
     render() {
         return (
             <div className="SearchBar">
-                <input placeholder="Enter a username to search" onChange={this.handleTermChange} onKeyPress={this.handleKeyPress} />
+                <input placeholder="Enter a username" onChange={this.handleTermChange} onKeyPress={this.handleKeyPress} />
                 <a onClick={this.search}>SEARCH</a>
             </div>
         );

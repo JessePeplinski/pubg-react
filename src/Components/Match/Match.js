@@ -41,7 +41,12 @@ class Match extends React.Component {
                 <div className="Match-information">
                     <h3>{this.props.match.id}</h3>
                     <p>MORE META DATA SHOULD GO HERE.</p>
-                    <button onClick={() => {this.setState({ showing: !showing }); this.searchMatch();}}>View Match Results</button>
+
+                    {/* Only make the request when the content is hidden */}
+                    <button onClick={() => {this.setState({ showing: !showing }); {showing ? null : this.searchMatch() }}}>
+                        {showing ? 'Hide' : 'Show'} Match Results
+                    </button>
+                    
                     {/* Toggle game stats onClick */}
                     { showing 
                         ? 
