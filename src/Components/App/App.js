@@ -33,7 +33,7 @@ class App extends React.Component {
     render() {
         return (
             <div className="App">
-                <h1>PUBG API stats</h1>
+                <h1>PUBG API Match Stats</h1>
                 <SearchBar onSearch={this.search} />
                 <SearchResults searchResults={this.state.searchResults} />
             </div>
