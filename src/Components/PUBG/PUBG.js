@@ -80,6 +80,33 @@ const PUBG = {
         .catch(err => console.log('error occured: ' + err));
     },
 
+    getHighLevelMatchStats(matchID, username) {
+        return fetch(`https://api.playbattlegrounds.com/shards/pc-na/matches/${matchID}`, options)
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            else {
+                console.log('error getting request');
+            }
+        })
+        .then(jsonResponse => {
+            if (!jsonResponse.data) {
+                return '';
+            }
+
+            // get an array with json of a single match status in the included array
+            const results = jsonResponse.data.attributes;
+
+            console.log(results);
+            
+            // TODO: Return the right thing here to spit out all the desired fields. I can also set the state?
+            return results;
+
+        })
+        .catch(err => console.log('error occured: ' + err));
+    },
+
     // TODO - Throwing an error for no duplicate keys
     username: ''
 };

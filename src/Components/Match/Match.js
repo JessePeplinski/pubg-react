@@ -32,6 +32,32 @@ class Match extends React.Component {
         })
     }
 
+    getMatchMetaData() {
+        PUBG.getHighLevelMatchStats(this.props.match.id).then(matchResults => {
+            this.setState({
+                createdAt: matchResults.createdAt,
+                duration: matchResults.duration,
+                gameMode: matchResults.gameMode,
+                mapName: matchResults.mapName
+            })
+        })
+    }
+
+    // "data": {
+    //     "type": "string",
+    //     "id": "string",
+    //     "attributes": {
+    //       "createdAt": "string",
+    //       "duration": 0,
+    //       "gameMode": "duo",
+    //       "mapName": "Desert_Main",
+    //       "patchVersion": "string",
+    //       "shardId": "string",
+    //       "stats": {},
+    //       "tags": {},
+    //       "titleId": "string"
+    //     },
+
     // TODO: Abstract this into MatchInformation component
     // TODO: Add logic for rendering fields better (should be able to get this logic from jamming for + and -)
     render() {
@@ -39,11 +65,10 @@ class Match extends React.Component {
         return (
             <div className="Match" key={this.props.match.id}>
                 <div className="Match-information">
-                    <h3>{this.props.match.id}</h3>
-                    <p>MORE META DATA SHOULD GO HERE.</p>
+                    <h3>Match ID: {this.props.match.id}</h3>
 
                     {/* Only make the request when the content is hidden */}
-                    <button onClick={() => {this.setState({ showing: !showing }); {showing ? null : this.searchMatch() }}}>
+                    <button onClick={() => {this.setState({ showing: !showing }); {showing ? null : this.searchMatch(); this.getMatchMetaData(); }}}>
                         {showing ? 'Hide' : 'Show'} Match Results
                     </button>
                     
@@ -51,6 +76,12 @@ class Match extends React.Component {
                     { showing 
                         ? 
                         <div className="gamestats">
+
+                            <p>Created at: {this.state.createdAt}</p>
+                            <p>Duration: {this.state.duration}</p>
+                            <p>Game mode: {this.state.gameMode}</p>
+                            <p>Map name: {this.state.mapName}</p>
+
                             <p>Kills: {this.state.kills}</p>
                             <p>Assists: {this.state.assists}</p>
                             <p>damageDealt: {this.state.damageDealt}</p>
