@@ -19,11 +19,16 @@ class App extends React.Component {
         this.search = this.search.bind(this);
     }
 
-    search(username) {
+    search(username, region) {
         if(!PUBG.username) {
             PUBG.username = username;
         }
-        PUBG.getMatchIds(username).then(searchResults => {
+
+        if(!PUBG.region) {
+            PUBG.region = region;
+        }
+        
+        PUBG.getMatchIds(username, region).then(searchResults => {
             this.setState({
                 searchResults: searchResults
             })

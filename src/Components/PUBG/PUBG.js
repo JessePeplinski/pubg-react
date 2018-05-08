@@ -23,8 +23,16 @@ const PUBG = {
         return this.username;
     },
 
+    set region(region) {
+        this.region = region;
+    },
+
+    get region() {
+        return this.region;
+    },
+
     getMatchIds(username) {
-        return fetch(`https://api.playbattlegrounds.com/shards/pc-na/players?filter[playerNames]=${username}`, options)
+        return fetch(`https://api.playbattlegrounds.com/shards/${this.region}/players?filter[playerNames]=${username}`, options)
         .then(response => {
             // console.log(response.status);
             // console.log(response.statusText);
@@ -54,7 +62,7 @@ const PUBG = {
 
     // TODO: Finish this function
     getMatchIdStats(matchID, username) {
-        return fetch(`https://api.playbattlegrounds.com/shards/pc-na/matches/${matchID}`, options)
+        return fetch(`https://api.playbattlegrounds.com/shards/${this.region}/matches/${matchID}`, options)
         .then(response => {
             if (response.ok) {
                 return response.json();
@@ -81,7 +89,7 @@ const PUBG = {
     },
 
     getHighLevelMatchStats(matchID, username) {
-        return fetch(`https://api.playbattlegrounds.com/shards/pc-na/matches/${matchID}`, options)
+        return fetch(`https://api.playbattlegrounds.com/shards/${this.region}/matches/${matchID}`, options)
         .then(response => {
             if (response.ok) {
                 return response.json();
@@ -108,7 +116,8 @@ const PUBG = {
     },
 
     // TODO - Throwing an error for no duplicate keys
-    username: ''
+    username: '',
+    region: ''
 };
 
 module.exports = PUBG;
